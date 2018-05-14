@@ -3,142 +3,47 @@
 #include <iostream>
 #include <al.h>
 #include <alc.h>
-//#include <AL/alut.h>
+//#include <SDL_audio.h>
+#include <AL/alut.h>
 
-static void list_audio_devices(const ALCchar *devices);
 
 
 int main(int argc, char** argv) {
-	
-	//Get Audio devices
-	
-	ALCdevice *device;
-	ALboolean enumeration;
-	device = alcOpenDevice(NULL);
+	ALuint buffer1, source1, buffer2, source2;
+	ALint state;
 
-	if (!device) {
-		std::cout << "OPENAL::ERROR : COULD NOT FIND DEVICES" << std::endl;
-	}
+	// Initialize the environment
+	alutInit(0, NULL);
 
-	enumeration = alcIsExtensionPresent(NULL, "ALC_ENUMERATION_EXT");
-
-	if (enumeration == AL_FALSE)
-		std::cout << "OPENAL::ERROR : ENUMERATION NOT SUPPORTED" << std::endl;
-	else
-		list_audio_devices(alcGetString(NULL, ALC_DEVICE_SPECIFIER));
-	
+	// Capture errors
 	alGetError();
-	//create a context for audio
-	ALCcontext *context;
 
-	context = alcCreateContext(device, NULL);
-	if (!alcMakeContextCurrent(context))
-		std::cout << "OPENAL::ERROR : COULD NOT CREATE CONTEXT" << std::endl;
-	
-	ALCenum error;
-	error = alGetError();
-	if (error != AL_NO_ERROR)
-		std::cout << "OPENAL::ERROR : ERROR AFTER CONTEXT CREATION" << std::endl;
+	// Load pcm data into buffer
+	buffer1 = alutCreateBufferFromFile("./res/audio/imperial_march.wav");
+	buffer2 = alutCreateBufferFromFile("./res/audio/bounce.wav");
+	// Create sound source (use buffer to fill source)
+	alGenSources(1, &source1);
+	alSourcei(source1, AL_BUFFER, buffer1);
+	alGenSources(1, &source2);
+	alSourcei(source2, AL_BUFFER, buffer2);
 
-	//create source
-	ALuint source;
-	alGenSources((ALuint)1, &source); // create 1 source object
-	
-	//Edit source parameters
-	alSourcef(source, AL_PITCH, 1);
-	// check for errors
-	alSourcef(source, AL_GAIN, 1);
-	// check for errors
-	alSource3f(source, AL_POSITION, 0, 0, 0);
-	// check for errors
-	alSource3f(source, AL_VELOCITY, 0, 0, 0);
-	// check for errors
-	alSourcei(source, AL_LOOPING, AL_FALSE);
-	// check for errros
+	// Play
+	alSourcePlay(source1);
+	alSourcePlay(source2);
+	// Wait for the song to complete
+	do {
+		alGetSourcei(source1, AL_SOURCE_STATE, &state);
+	} while (state == AL_PLAYING);
 
-	//create buffer
-	ALuint buffer;
+	// Clean up sources and buffers
+	alDeleteSources(1, &source1);
+	alDeleteBuffers(1, &buffer1);
+	alDeleteSources(1, &source2);
+	alDeleteBuffers(1, &buffer2);
 
-	alGenBuffers((ALuint)1, &buffer);//generate 1 buffer object
-
-	//load audiostream to buffer
-	ALsizei size, freq;
-	ALenum format;
-	ALvoid *data;
-	ALboolean loop = AL_FALSE;
-	//ALbyte file = (ALbyte)("res\audio\imperial_march.wav");
-
-	alutLoadWAVFile("res\audio\imperial_march.wav", &format, &data, &size, &freq, &loop);
-
-	std::cout << "format = " << format << std::endl;
-	std::cout << "data = " << data << std::endl;
-
-
-	error = alGetError();
-	if (error != AL_NO_ERROR)
-		std::cout << "OPENAL::ERROR : CAN NOT LOAD FILE" << std::endl;
-
-	//load wav file into buffer
-	alBufferData(buffer, format, &data, size, freq);
-	
-	error = alGetError();
-	if (error != AL_NO_ERROR)
-		std::cout << "OPENAL::ERROR : CAN NOT LOAD FILE IN BUFFER" << std::endl;
-	
-	//bind source to buffer
-	alSourcei(source, AL_BUFFER, buffer);
-
-	error = alGetError();
-	if (error != AL_NO_ERROR)
-		std::cout << "OPENAL::ERROR : CAN NOT MERGE SOURCE AND BUFFER" << std::endl;
-
-
-	//play source
-	alSourcePlay(source);
-
-	error = alGetError();
-	if (error != AL_NO_ERROR)
-		std::cout << "OPENAL::ERROR : CAN NOT PLAY FILE" << std::endl;
-	
-	ALint source_state;
-
-	alGetSourcei(source, AL_SOURCE_STATE, &source_state);
-	
-	error = alGetError();
-	if (error != AL_NO_ERROR)
-		std::cout << "OPENAL::ERROR : CAN NOT GET SOURCE STATE" << std::endl;
-	
-	std::cout << source_state << std::endl;
-	while (source_state == AL_PLAYING){
-		std::cout << "entered" << std::endl;
-		std::cout << source_state << std::endl;
-		alGetSourcei(source, AL_SOURCE_STATE, &source_state);
-	}
-
-	//cleanup
-	alDeleteSources(1, &source);
-	alDeleteBuffers(1, &buffer);
-	device = alcGetContextsDevice(context);
-	alcMakeContextCurrent(NULL);
-	alcDestroyContext(context);
-	alcCloseDevice(device);
-
+	// Exit everything
+	alutExit();
 	system("pause");
 	return 0;
-}
-
-static void list_audio_devices(const ALCchar *devices)
-{
-	const ALCchar *device = devices, *next = devices + 1;
-	size_t len = 0;
-
-	fprintf(stdout, "Devices list:\n");
-	fprintf(stdout, "----------\n");
-	while (device && *device != '\0' && next && *next != '\0') {
-		fprintf(stdout, "%s\n", device);
-		len = strlen(device);
-		device += (len + 1);
-		next += (len + 2);
-	}
-	fprintf(stdout, "----------\n");
+	
 }
