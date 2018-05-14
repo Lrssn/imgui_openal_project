@@ -1,0 +1,6 @@
+imgui_openal_project
+ISSUES & TODO LIST
+
+ -openAL: Threading
+
+ -Imgui: implement
