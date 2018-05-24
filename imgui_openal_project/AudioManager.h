@@ -1,18 +1,22 @@
 #pragma once
 
-#include<string>
+#include <iostream>
+#include <string>
 #include <al.h>
 #include <alc.h>
-#include <AL/alut.h>
+#include "AudioSource.h"
 
 class AudioManager {
 public:
 	AudioManager();
 	~AudioManager();
-	void Play(const char* src);
+	void setVolume(ALfloat vol);
+	ALfloat getVolume();
+	void Play(AudioSource* soundSource);
 private:
-	void LoadSource();
-	const char*  soundSource;
-	ALuint buffer, source;
 	ALint state;
+	ALfloat volume;
+	ALfloat listenerPos[3] = {0.0, 0.0, 0.0};
+	ALfloat listenerVel[3] = {0.0, 0.0, 0.0};
+	ALfloat listenerOri[6] = {0.0, 0.0, -1.0, 0.0, 1.0, 0.0};
 };

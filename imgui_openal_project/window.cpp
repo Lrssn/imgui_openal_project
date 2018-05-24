@@ -18,12 +18,12 @@ Window::~Window()
 	SDL_Quit();
 }
 
-SDL_Window * Window::getWindow()
+SDL_Window* Window::getWindow()
 {
 	return this->window;
 }
 
-SDL_Surface * Window::getSurface()
+SDL_Surface* Window::getSurface()
 {
 	return this->screenSurface;
 }
@@ -35,7 +35,7 @@ void Window::update()
 	SDL_UpdateWindowSurface(this->window);
 
 	//ms
-	SDL_Delay(2000);
+	SDL_Delay(750);
 }
 
 void Window::createWindow()

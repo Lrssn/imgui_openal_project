@@ -1,12 +1,7 @@
-#pragma warning(disable: 4996)
-
 #include <iostream>
 #include "AudioManager.h"
+#include "AudioSource.h"
 #include "window.h"
-
-//Screen dimension constants
-const int SCREEN_WIDTH = 640;
-const int SCREEN_HEIGHT = 480;
 
 int main(int argc, char** argv) {
 
@@ -15,8 +10,14 @@ int main(int argc, char** argv) {
 	Window window(height, width);
 	window.update();
 	AudioManager am;
-	
-	am.Play("./res/audio/bounce.wav");
+	AudioSource As("./res/audio/bounce.wav");
+
+	am.setVolume(1.5);
+	am.Play(&As);
+	As.setLooping(true);
+	As.setPitch(2.0);
+	am.Play(&As);
+	As.~AudioSource();
 	am.~AudioManager();
 	window.~Window();
 

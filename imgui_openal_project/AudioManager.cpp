@@ -10,29 +10,31 @@ AudioManager::AudioManager()
 
 AudioManager::~AudioManager()
 {
-	// Clean up sources and buffers
-	alDeleteSources(1, &this->source);
-	alDeleteBuffers(1, &this->buffer);
 	alutExit();
 }
 
-void AudioManager::Play(const char* src)
+void AudioManager::setVolume(ALfloat vol)
 {
-	this->soundSource = src;
-	LoadSource();
-	// Play
-	alSourcePlay(this->source);
+	//set volume
+	volume = vol;
+	alListenerf(AL_GAIN, volume);
+	std::cout << "Volume set to: " << (float)this->volume << std::endl;
+}
+
+ALfloat AudioManager::getVolume()
+{
+	alGetListenerf(AL_GAIN, &this->volume);
+	return this->volume;
+}
+
+void AudioManager::Play(AudioSource* soundSource)
+{
+
+	//Play
+	alSourcePlay(soundSource->getSourceId());
 	// Wait for the song to complete
 	do {
-		alGetSourcei(this->source, AL_SOURCE_STATE, &this->state);
+		alGetSourcei(soundSource->getSourceId(), AL_SOURCE_STATE, &this->state);
 	} while (this->state == AL_PLAYING);
 }
 
-void AudioManager::LoadSource()
-{
-	// Load pcm data into buffer
-	this->buffer = alutCreateBufferFromFile(this->soundSource);
-	// Create sound source (use buffer to fill source)
-	alGenSources(1, &this->source);
-	alSourcei(this->source, AL_BUFFER, this->buffer);
-}
