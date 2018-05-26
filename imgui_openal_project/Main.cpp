@@ -6,9 +6,11 @@
 int main(int argc, char** argv) {
 
 	int width = 640, height = 480;
-	
+	//video
 	Window window(height, width);
 	window.update();
+
+	//audio
 	AudioManager am;
 	AudioSource As("./res/audio/bounce.wav");
 

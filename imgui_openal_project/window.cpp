@@ -1,7 +1,6 @@
 #include "window.h"
 
-Window::Window(int height, int width)
-{
+Window::Window(int height, int width){
 	this->window = NULL;
 	this->screenSurface = NULL;
 	this->height = height;
@@ -10,26 +9,22 @@ Window::Window(int height, int width)
 	createWindow();
 }
 
-Window::~Window()
-{
+Window::~Window(){
 	//Destroy window
 	SDL_DestroyWindow(window);
 	//Quit SDL subsystems
 	SDL_Quit();
 }
 
-SDL_Window* Window::getWindow()
-{
+SDL_Window* Window::getWindow(){
 	return this->window;
 }
 
-SDL_Surface* Window::getSurface()
-{
+SDL_Surface* Window::getSurface(){
 	return this->screenSurface;
 }
 
-void Window::update()
-{
+void Window::update(){
 	draw();
 	//Update the surface
 	SDL_UpdateWindowSurface(this->window);
@@ -38,8 +33,7 @@ void Window::update()
 	SDL_Delay(750);
 }
 
-void Window::createWindow()
-{
+void Window::createWindow(){
 	if (SDL_Init(SDL_INIT_VIDEO) < 0) {
 		printf("SDL could not initialize! SDL_Error: %s\n", SDL_GetError());
 	}
@@ -58,7 +52,6 @@ void Window::createWindow()
 	}
 }
 
-void Window::draw()
-{
+void Window::draw(){
 
 }
