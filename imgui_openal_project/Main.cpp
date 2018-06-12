@@ -1,32 +1,16 @@
-#pragma warning(disable: 4996)
-
 #include <iostream>
-#include <al.h>
-#include <alc.h>
-//#include <SDL_audio.h>
-#include <AL/alut.h>
-
-
+#include "AudioManager.h"
+#include "AudioSource.h"
+#include "window.h"
 
 int main(int argc, char** argv) {
-	ALuint buffer1, source1, buffer2, source2;
-	ALint state;
 
-	// Initialize the environment
-	alutInit(0, NULL);
+	int width = 640, height = 480;
+	//video
+	Window window(height, width);
+	window.update();
 
-	// Capture errors
-	alGetError();
-
-	// Load pcm data into buffer
-	buffer1 = alutCreateBufferFromFile("./res/audio/imperial_march.wav");
-	buffer2 = alutCreateBufferFromFile("./res/audio/bounce.wav");
-	// Create sound source (use buffer to fill source)
-	alGenSources(1, &source1);
-	alSourcei(source1, AL_BUFFER, buffer1);
-	alGenSources(1, &source2);
-	alSourcei(source2, AL_BUFFER, buffer2);
-
+<<<<<<< HEAD
 	// Play
 	alSourcePlay(source1);
 	alSourcePlay(source2);
@@ -35,15 +19,21 @@ int main(int argc, char** argv) {
 		alGetSourcei(source2, AL_SOURCE_STATE, &state);
 	} while (state == AL_PLAYING);
 	std::cout << "played sound" << std::endl;
+=======
+	//audio
+	AudioManager am;
+	AudioSource As("./res/audio/bounce.wav");
+>>>>>>> 7a376c2d7fe38fb4a971d3ee06ae9c0878d457e9
 
-	// Clean up sources and buffers
-	alDeleteSources(1, &source1);
-	alDeleteBuffers(1, &buffer1);
-	alDeleteSources(1, &source2);
-	alDeleteBuffers(1, &buffer2);
+	am.setVolume(1.5);
+	am.Play(&As);
+	As.setLooping(true);
+	As.setPitch(2.0);
+	am.Play(&As);
+	As.~AudioSource();
+	am.~AudioManager();
+	window.~Window();
 
-	// Exit everything
-	alutExit();
 	system("pause");
 	return 0;
 	
