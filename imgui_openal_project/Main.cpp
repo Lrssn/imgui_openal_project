@@ -32,8 +32,9 @@ int main(int argc, char** argv) {
 	alSourcePlay(source2);
 	// Wait for the song to complete
 	do {
-		alGetSourcei(source1, AL_SOURCE_STATE, &state);
+		alGetSourcei(source2, AL_SOURCE_STATE, &state);
 	} while (state == AL_PLAYING);
+	std::cout << "played sound" << std::endl;
 
 	// Clean up sources and buffers
 	alDeleteSources(1, &source1);
