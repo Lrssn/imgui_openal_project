@@ -140,6 +140,10 @@
     <ClInclude Include="AudioSource.h" />
     <ClInclude Include="window.h" />
   </ItemGroup>
+  <ItemGroup>
+    <Image Include="res\images\aurora_400.jpg" />
+    <Image Include="res\images\dumb.bmp" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

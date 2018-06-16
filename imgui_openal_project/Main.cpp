@@ -10,6 +10,8 @@ int main(int argc, char** argv) {
 	Window window(height, width);
 	window.update();
 
+
+
 	//audio
 	AudioManager am;
 	AudioSource As("./res/audio/bounce.wav");
@@ -24,7 +26,7 @@ int main(int argc, char** argv) {
 	am.~AudioManager();
 	window.~Window();
 
-	system("pause");
+	getchar();
 	return 0;
 	
 }

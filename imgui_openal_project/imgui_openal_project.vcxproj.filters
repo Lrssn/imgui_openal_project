@@ -47,4 +47,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
+  <ItemGroup>
+    <Image Include="res\images\aurora_400.jpg">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\images\dumb.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+  </ItemGroup>
 </Project>

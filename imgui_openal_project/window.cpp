@@ -50,6 +50,21 @@ void Window::createWindow(){
 			SDL_FillRect(this->screenSurface, NULL, SDL_MapRGB(this->screenSurface->format, 255, 0, 0));
 		}
 	}
+
+	//TODO: abstract
+	SDL_Renderer *renderer = SDL_CreateRenderer(this->window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
+	if (renderer == nullptr) {
+		SDL_DestroyWindow(this->window);
+		std::cout << "SDL_CreateRenderer Error: " << SDL_GetError() << std::endl;
+	}
+	std::string imagePath = "dumb.bmp";
+	SDL_Surface *bmp = SDL_LoadBMP(imagePath.c_str());
+	if (bmp == nullptr) {
+		SDL_DestroyRenderer(renderer);
+		SDL_DestroyWindow(this->window);
+		std::cout << "SDL_LoadBMP Error: " << SDL_GetError() << std::endl;
+	}
+
 }
 
 void Window::draw(){
