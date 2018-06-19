@@ -5,7 +5,7 @@
 
 int main(int argc, char** argv) {
 
-	int width = 640, height = 480;
+	const int width = 640, height = 480;
 	//video
 	Window window(height, width);
 	window.update();
@@ -14,15 +14,15 @@ int main(int argc, char** argv) {
 
 	//audio
 	AudioManager am;
-	AudioSource As("./res/audio/bounce.wav");
+	AudioSource as("./res/audio/bounce.wav");
 
 
 	am.setVolume(1.5);
-	am.Play(&As);
-	As.setLooping(false);
-	As.setPitch(2.0);
-	am.Play(&As);
-	As.~AudioSource();
+	am.Play(&as);
+	as.setLooping(false);
+	as.setPitch(2.0);
+	am.Play(&as);
+	as.~AudioSource();
 	am.~AudioManager();
 	window.~Window();
 

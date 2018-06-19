@@ -1,10 +1,10 @@
 #include "window.h"
 
-Window::Window(int height, int width){
-	this->window = NULL;
-	this->screenSurface = NULL;
-	this->height = height;
-	this->width = width;
+Window::Window(int _height, int _width){
+	this->window = nullptr;
+	this->screenSurface = nullptr;
+	this->height = _height;
+	this->width = _width;
 
 	createWindow();
 }
@@ -40,7 +40,7 @@ void Window::createWindow(){
 	else {
 		//Create window
 		this->window = SDL_CreateWindow("Lrssn Audio", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, this->width, this->height, SDL_WINDOW_SHOWN);
-		if (this->window == NULL) {
+		if (this->window == nullptr) {
 			printf("Window could not be created! SDL_Error: %s\n", SDL_GetError());
 		}
 		else {

@@ -6,7 +6,7 @@
 
 class Window{
 public: 
-	Window(int height, int width);
+	Window(int _height, int _width);
 	~Window();
 	SDL_Window* getWindow();
 	SDL_Surface* getSurface();
@@ -16,7 +16,7 @@ private:
 	void draw();
 	int height, width;
 	//The window we'll be rendering to
-	SDL_Window * window;
+	SDL_Window* window;
 	//The surface contained by the window
 	SDL_Surface* screenSurface;
 };
