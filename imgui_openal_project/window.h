@@ -12,6 +12,7 @@ public:
 	SDL_Surface* getSurface();
 	void update();
 private:
+	const void loadImage(const std::string &_imagePath);
 	void createWindow();
 	void draw();
 	int height, width;
@@ -19,4 +20,6 @@ private:
 	SDL_Window* window;
 	//The surface contained by the window
 	SDL_Surface* screenSurface;
+	//The renderer for pictures
+	SDL_Renderer* renderer;
 };
