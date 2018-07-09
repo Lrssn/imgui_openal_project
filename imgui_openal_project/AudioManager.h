@@ -10,9 +10,9 @@ class AudioManager {
 public:
 	AudioManager();
 	~AudioManager();
-	void setVolume(ALfloat vol);
+	void setVolume(ALfloat _vol);
 	ALfloat getVolume();
-	void Play(AudioSource* soundSource);
+	void Play(AudioSource* _soundSource);
 private:
 	ALint state;
 	ALfloat volume;

@@ -5,28 +5,48 @@
 
 int main(int argc, char** argv) {
 
-	int width = 640, height = 480;
+	const int width = 640, height = 480;
 	//video
 	Window window(height, width);
-	window.update();
-
-
 
 	//audio
 	AudioManager am;
-	AudioSource As("./res/audio/bounce.wav");
-
+	AudioSource as("./res/audio/bounce.wav");
+	SDL_Event event;
 
 	am.setVolume(1.5);
-	am.Play(&As);
-	As.setLooping(false);
-	As.setPitch(2.0);
-	am.Play(&As);
-	As.~AudioSource();
+	while (window.getRunning()){
+		window.update();
+		while (SDL_PollEvent(&event) != NULL){
+			//User requests quit
+			if (event.type == SDL_QUIT){
+				window.stop();
+			}else if(event.type == SDL_KEYDOWN){
+				switch (event.key.keysym.sym)
+				{
+				case SDLK_ESCAPE:
+					window.stop();
+					break;
+					
+				case SDLK_e:
+					am.Play(&as);
+					break;
+
+				case SDLK_a:
+					as.setPitch(2.0);
+					break;
+				case SDLK_s:
+					as.setPitch(1.0);
+					break;
+				}
+			}
+		}
+	}
+
+	as.~AudioSource();
 	am.~AudioManager();
 	window.~Window();
 
 	getchar();
 	return 0;
-	
 }
