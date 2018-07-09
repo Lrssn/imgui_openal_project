@@ -13,10 +13,13 @@ public:
 	void update();
 private:
 	void createWindow();
+	void createRenderer();
 	void draw();
 	int height, width;
 	//The window we'll be rendering to
-	SDL_Window * window;
+	SDL_Window* window;
 	//The surface contained by the window
 	SDL_Surface* screenSurface;
+	//The renderer for our window
+	SDL_Renderer* renderer;
 };

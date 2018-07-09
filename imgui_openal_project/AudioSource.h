@@ -16,9 +16,10 @@ public:
 	ALboolean getLooping();
 	
 private:
+	void LoadSource();
 	const char*  source;
 	ALuint bufferId, sourceId;
 	ALfloat pitch, volume;
 	ALboolean isLooping;
-	void LoadSource();
+
 };

@@ -7,6 +7,7 @@ Window::Window(int height, int width){
 	this->width = width;
 
 	createWindow();
+	createRenderer();
 }
 
 Window::~Window(){
@@ -52,12 +53,7 @@ void Window::createWindow(){
 	}
 
 	//TODO: abstract
-	SDL_Renderer *renderer = SDL_CreateRenderer(this->window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
-	if (renderer == nullptr) {
-		SDL_DestroyWindow(this->window);
-		std::cout << "SDL_CreateRenderer Error: " << SDL_GetError() << std::endl;
-	}
-	std::string imagePath = "dumb.bmp";
+	std::string imagePath = "res/images/dumb.bmp";
 	SDL_Surface *bmp = SDL_LoadBMP(imagePath.c_str());
 	if (bmp == nullptr) {
 		SDL_DestroyRenderer(renderer);
@@ -65,6 +61,15 @@ void Window::createWindow(){
 		std::cout << "SDL_LoadBMP Error: " << SDL_GetError() << std::endl;
 	}
 
+}
+
+void Window::createRenderer()
+{
+	this->renderer = SDL_CreateRenderer(this->window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
+	if (renderer == nullptr) {
+		SDL_DestroyWindow(this->window);
+		std::cout << "SDL_CreateRenderer Error: " << SDL_GetError() << std::endl;
+	}
 }
 
 void Window::draw(){

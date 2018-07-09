@@ -31,9 +31,9 @@ void AudioSource::setLooping(ALboolean _loop)
 	this->isLooping = _loop;
 	alSourcei(this->sourceId, AL_LOOPING, (ALint)isLooping);
 	if(isLooping)
-		std::cout << "Audiosource nr" << this->sourceId << ": is now looping" << std::endl;
+		std::cout << "Audiosource nr: " << this->sourceId << " is now looping" << std::endl;
 	else
-		std::cout << "Audiosource nr" << this->sourceId << ": is no longer looping" << std::endl;
+		std::cout << "Audiosource nr: " << this->sourceId << " is no longer looping" << std::endl;
 
 }
 
