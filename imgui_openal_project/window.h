@@ -11,6 +11,8 @@ public:
 	SDL_Window* getWindow();
 	SDL_Surface* getSurface();
 	void update();
+	bool getRunning();
+	void stop();
 private:
 	const void loadImage(const std::string &_imagePath);
 	void createWindow();
@@ -22,4 +24,5 @@ private:
 	SDL_Surface* screenSurface;
 	//The renderer for pictures
 	SDL_Renderer* renderer;
+	bool running;
 };

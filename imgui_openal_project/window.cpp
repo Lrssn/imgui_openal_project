@@ -5,7 +5,7 @@ Window::Window(int _height, int _width){
 	this->screenSurface = nullptr;
 	this->height = _height;
 	this->width = _width;
-
+	this->running = true;
 	createWindow();
 }
 
@@ -31,6 +31,14 @@ void Window::update(){
 	SDL_UpdateWindowSurface(this->window);
 	//ms
 	SDL_Delay(750);
+}
+
+bool Window::getRunning() {
+	return this->running;
+}
+
+void Window::stop() {
+	this->running = false;
 }
 
 const void Window::loadImage(const std::string &_imagePath)
