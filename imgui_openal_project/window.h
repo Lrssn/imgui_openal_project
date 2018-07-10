@@ -2,6 +2,7 @@
 
 #include <iostream>
 #include <SDL.h>
+#include <SDL_image.h>
 #include <SDL_main.h>
 
 class Window{
@@ -14,6 +15,7 @@ public:
 	bool getRunning();
 	void stop();
 private:
+	SDL_Surface* loadSurface(const std::string &_imagePath);
 	const void loadImage(const std::string &_imagePath);
 	void createWindow();
 	void draw();

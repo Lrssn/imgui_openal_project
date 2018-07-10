@@ -26,7 +26,7 @@ SDL_Surface* Window::getSurface(){
 
 void Window::update(){
 	draw();
-	loadImage("res/images/dumb.bmp");
+	loadImage("res/images/aurora_400.jpg");
 	//Update the surface
 	SDL_UpdateWindowSurface(this->window);
 	//ms
@@ -40,21 +40,43 @@ bool Window::getRunning() {
 void Window::stop() {
 	this->running = false;
 }
+[[DEPRECATED]]
+SDL_Surface* loadSurface(const std::string &_imagePath) {
+	//The final optimized image
+	SDL_Surface* optimizedSurface = nullptr;
+
+	//Load image at specified path
+	SDL_Surface* loadedSurface = IMG_Load(_imagePath.c_str());
+	if (loadedSurface == nullptr) {
+		printf("Unable to load image %s! SDL_image Error: %s\n", _imagePath.c_str(), IMG_GetError());
+	}
+	else {
+		//Convert surface to screen format
+		//this line does not work
+		//optimizedSurface = SDL_ConvertSurface(loadedSurface, .format, NULL);
+		if (optimizedSurface == nullptr)
+		{
+			printf("Unable to optimize image %s! SDL Error: %s\n", _imagePath.c_str(), SDL_GetError());
+		}
+
+		//Get rid of old loaded surface
+		SDL_FreeSurface(loadedSurface);
+	}
+
+	return optimizedSurface;
+}
+
 
 const void Window::loadImage(const std::string &_imagePath)
 {
-	const std::string fileType = _imagePath.substr(_imagePath.find_last_of(".") + 1);
-	if (fileType == "bmp") {
-		SDL_Surface *bmp = SDL_LoadBMP(_imagePath.c_str());
-		if (bmp == nullptr) {
+
+	SDL_Surface* imageSurface = IMG_Load(_imagePath.c_str());
+	if(imageSurface == nullptr) {
+			printf("Unable to load image %s! SDL_image Error: %s\n", _imagePath.c_str(), IMG_GetError());
 			SDL_DestroyRenderer(renderer);
 			SDL_DestroyWindow(this->window);
-			std::cout << "SDL_LoadBMP Error: " << SDL_GetError() << std::endl;
-		}
-		SDL_BlitSurface(bmp, nullptr, this->screenSurface, nullptr);
-	}else {
-		std::cout << "File does not have a valid filetype!" << std::endl;
 	}
+	SDL_BlitSurface(imageSurface, nullptr, this->screenSurface, nullptr);
 }
 
 void Window::createWindow(){
