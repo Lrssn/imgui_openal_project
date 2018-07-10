@@ -40,7 +40,7 @@ bool Window::getRunning() {
 void Window::stop() {
 	this->running = false;
 }
-[[DEPRECATED]]
+[[deprecated("Replaced by loadImage")]]
 SDL_Surface* loadSurface(const std::string &_imagePath) {
 	//The final optimized image
 	SDL_Surface* optimizedSurface = nullptr;
