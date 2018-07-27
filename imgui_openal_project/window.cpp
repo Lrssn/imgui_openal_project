@@ -26,20 +26,20 @@ SDL_Surface* Window::getSurface(){
 
 void Window::update(){
 	draw();
-	loadImage("res/images/aurora_400.jpg");
 	//Update the surface
 	SDL_UpdateWindowSurface(this->window);
 	//ms
-	SDL_Delay(750);
+	//SDL_Delay(750);
 }
 
-bool Window::getRunning() {
+bool Window::isRunning() {
 	return this->running;
 }
 
 void Window::stop() {
 	this->running = false;
 }
+
 [[deprecated("Replaced by loadImage")]]
 SDL_Surface* loadSurface(const std::string &_imagePath) {
 	//The final optimized image
@@ -66,10 +66,8 @@ SDL_Surface* loadSurface(const std::string &_imagePath) {
 	return optimizedSurface;
 }
 
-
-const void Window::loadImage(const std::string &_imagePath)
+ void Window::loadImage(const std::string &_imagePath) const
 {
-
 	SDL_Surface* imageSurface = IMG_Load(_imagePath.c_str());
 	if(imageSurface == nullptr) {
 			printf("Unable to load image %s! SDL_image Error: %s\n", _imagePath.c_str(), IMG_GetError());
@@ -102,5 +100,5 @@ void Window::createWindow(){
 }
 
 void Window::draw(){
-
+	loadImage("res/images/aurora_400.jpg");
 }

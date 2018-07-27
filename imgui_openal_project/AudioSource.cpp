@@ -16,7 +16,7 @@ void AudioSource::setPitch(ALfloat _pitch)
 {
 	this->pitch = _pitch;
 	alSourcef(this->sourceId, AL_PITCH, this->pitch);
-	std::cout << "Pitch set to: " << (float)this->pitch << std::endl;
+	std::cout << "Pitch set to: " << (float)(this->pitch) << std::endl;
 }
 
 void AudioSource::setVolume(ALfloat _vol)

@@ -12,11 +12,11 @@ public:
 	SDL_Window* getWindow();
 	SDL_Surface* getSurface();
 	void update();
-	bool getRunning();
+	bool isRunning();
 	void stop();
 private:
 	SDL_Surface* loadSurface(const std::string &_imagePath);
-	const void loadImage(const std::string &_imagePath);
+	void loadImage(const std::string &_imagePath) const;
 	void createWindow();
 	void draw();
 	int height, width;
