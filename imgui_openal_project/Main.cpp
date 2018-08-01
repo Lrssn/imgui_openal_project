@@ -37,6 +37,9 @@ int main(int argc, char** argv) {
 					case SDLK_s:
 						as.setPitch(1.0);
 						break;
+					default:
+						std::cout << "ERROR::INPUT: INPUT NOT BOUND" << std::endl;
+						break;
 				}
 			}
 		}
