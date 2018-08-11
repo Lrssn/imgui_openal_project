@@ -29,7 +29,6 @@ ALfloat AudioManager::getVolume()
 
 void AudioManager::Play(AudioSource* _soundSource)
 {
-
 	//Play
 	alSourcePlay(_soundSource->getSourceId());
 	// Wait for the song to complete
