@@ -44,7 +44,9 @@ int main(int argc, char** argv) {
 					break;
 				}
 			}
+			
 		}
+		//as.setPitch(as.getPitch() + 0.001);
 	}
 
 

@@ -27,6 +27,7 @@ SDL_Surface* Window::getSurface(){
 void Window::update(){
 	draw();
 	loadImage("res/images/aurora_400.jpg");
+	//loadSurface("res/images/aurora_400.jpg", *this->screenSurface);
 	//Update the surface
 	SDL_UpdateWindowSurface(this->window);
 	//ms
@@ -41,7 +42,7 @@ void Window::stop() {
 	this->running = false;
 }
 [[deprecated("Replaced by loadImage")]]
-SDL_Surface* loadSurface(const std::string &_imagePath) {
+SDL_Surface* loadSurface(const std::string &_imagePath, SDL_Surface &_screenSurface) {
 	//The final optimized image
 	SDL_Surface* optimizedSurface = nullptr;
 
@@ -53,7 +54,7 @@ SDL_Surface* loadSurface(const std::string &_imagePath) {
 	else {
 		//Convert surface to screen format
 		//this line does not work
-		//optimizedSurface = SDL_ConvertSurface(loadedSurface, .format, NULL);
+		optimizedSurface = SDL_ConvertSurface(loadedSurface, _screenSurface.format, NULL);
 		if (optimizedSurface == nullptr)
 		{
 			printf("Unable to optimize image %s! SDL Error: %s\n", _imagePath.c_str(), SDL_GetError());

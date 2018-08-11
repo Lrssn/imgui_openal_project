@@ -15,7 +15,7 @@ public:
 	bool getRunning();
 	void stop();
 private:
-	SDL_Surface* loadSurface(const std::string &_imagePath);
+	SDL_Surface* loadSurface(const std::string &_imagePath, SDL_Surface &_screenSurface);
 	const void loadImage(const std::string &_imagePath);
 	void createWindow();
 	void draw();
