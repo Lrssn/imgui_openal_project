@@ -26,7 +26,7 @@ SDL_Surface* Window::getSurface(){
 
 void Window::update(){
 	draw();
-	loadImage("res/images/aurora_400.jpg");
+	
 	//loadSurface("res/images/aurora_400.jpg", *this->screenSurface);
 	//Update the surface
 	SDL_UpdateWindowSurface(this->window);
@@ -77,7 +77,15 @@ const void Window::loadImage(const std::string &_imagePath)
 			SDL_DestroyRenderer(renderer);
 			SDL_DestroyWindow(this->window);
 	}
-	SDL_BlitSurface(imageSurface, nullptr, this->screenSurface, nullptr);
+	//SDL_BlitSurface(imageSurface, nullptr, this->screenSurface, nullptr);
+	//Apply the image stretched
+	SDL_Rect stretchRect;
+	stretchRect.x = 0;
+	stretchRect.y = 0;
+	stretchRect.w = this->width;
+	stretchRect.h = this->height;
+	SDL_BlitScaled(imageSurface, NULL, this->screenSurface, &stretchRect);
+
 }
 
 void Window::createWindow(){
@@ -100,6 +108,7 @@ void Window::createWindow(){
 			}
 		}
 	}
+	loadImage("res/images/aurora_400.jpg");
 }
 
 void Window::draw(){

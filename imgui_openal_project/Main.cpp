@@ -9,14 +9,14 @@ int main(int argc, char** argv) {
 	const int width = 640, height = 480;
 	Window window(height, width);
 	window.update();
-
+	std::vector<float> a;
 	//audio
 	AudioManager am;
-	AudioSource as("./res/audio/bounce.wav");
+	AudioSource as("./res/audio/bounce.wav", "Effects");
 	SDL_Event event;
-
+	int q = 0;
 	am.setVolume(1.5);
-	while (window.isRunning()) {
+	while (window.getRunning()) {
 		window.update();
 		while (SDL_PollEvent(&event) != NULL) {
 			//User requests quit
@@ -37,14 +37,37 @@ int main(int argc, char** argv) {
 					case SDLK_s:
 						as.setPitch(1.0);
 						break;
+					case SDLK_t:
+						if(q == 0){
+							as.setSource("./res/audio/bounce.wav");
+							q++;
+						}else if(q == 1){
+							as.setSource("./res/audio/guitar.wav");
+							q++;
+						}else if (q == 2) {
+							as.setSource("./res/audio/clang.wav");
+							q = 0;
+						}
+						break;
+					case SDLK_u:
+						as.setPosition(1.0f, 0.5f, 3.0f);
+						as.setDirection(1.0f, 0.5f, 3.0f);
+						as.setVelocity(10.0f, 1.5f, 6.0f);
+						break;
+					case SDLK_i:
+						std::cout << "Position is: x=" << as.getPosition()->at(0) << ",  y = " << as.getPosition()->at(1) << ",  z = " << as.getPosition()->at(2) << std::endl;
+						std::cout << "Direction is: x=" << as.getDirection()->at(0) << ",  y = " << as.getDirection()->at(1) << ",  z = " << as.getDirection()->at(2) << std::endl;
+						std::cout << "Velocity is: x=" << as.getVelocity()->at(0) << ",  y = " << as.getVelocity()->at(1) << ",  z = " << as.getVelocity()->at(2) << std::endl;
+						break;
 					default:
+						
 						std::cout << "ERROR::INPUT: INPUT NOT BOUND" << std::endl;
 						break;
 				}
 			}
 			
 		}
-		//as.setPitch(as.getPitch() + 0.001);
+		
 	}
 	
 	as.~AudioSource();
