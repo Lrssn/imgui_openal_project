@@ -16,15 +16,15 @@ AudioManager::~AudioManager()
 void AudioManager::setVolume(ALfloat _vol)
 {
 	//set volume
-	volume = _vol;
-	alListenerf(AL_GAIN, volume);
-	std::cout << "Volume set to: " << (float)this->volume << std::endl;
+	masterVolume = _vol;
+	alListenerf(AL_GAIN, masterVolume);
+	std::cout << "Volume set to: " << (float)this->masterVolume << std::endl;
 }
 
 ALfloat AudioManager::getVolume()
 {
-	alGetListenerf(AL_GAIN, &this->volume);
-	return this->volume;
+	alGetListenerf(AL_GAIN, &this->masterVolume);
+	return this->masterVolume;
 }
 
 void AudioManager::Play(AudioSource* _soundSource)

@@ -15,7 +15,7 @@ public:
 	void Play(AudioSource* _soundSource);
 private:
 	ALint state;
-	ALfloat volume;
+	ALfloat masterVolume;
 	ALfloat listenerPos[3] = {0.0, 0.0, 0.0};
 	ALfloat listenerVel[3] = {0.0, 0.0, 0.0};
 	ALfloat listenerOri[6] = {0.0, 0.0, -1.0, 0.0, 1.0, 0.0};

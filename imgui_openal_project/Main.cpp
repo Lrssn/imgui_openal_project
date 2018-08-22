@@ -3,6 +3,7 @@
 #include "AudioSource.h"
 #include "window.h"
 
+
 int main(int argc, char** argv) {
 	
 	//video
@@ -12,6 +13,7 @@ int main(int argc, char** argv) {
 	std::vector<float> a;
 	//audio
 	AudioManager am;
+	AudioSource bgMusic("./res/audio/imperial_march.wav", "Background music");
 	AudioSource as("./res/audio/bounce.wav", "Effects");
 	SDL_Event event;
 	int q = 0;
@@ -34,6 +36,9 @@ int main(int argc, char** argv) {
 					case SDLK_a:
 						as.setPitch(2.0);
 						break;
+					case SDLK_d:
+						am.Play(&bgMusic);
+						break;
 					case SDLK_s:
 						as.setPitch(1.0);
 						break;
@@ -50,9 +55,7 @@ int main(int argc, char** argv) {
 						}
 						break;
 					case SDLK_u:
-						as.setPosition(1.0f, 0.5f, 3.0f);
-						as.setDirection(1.0f, 0.5f, 3.0f);
-						as.setVelocity(10.0f, 1.5f, 6.0f);
+						as.setPosition( 0.0f, as.getPosition()->at(1) + 1.0f, 0.0f);
 						break;
 					case SDLK_i:
 						std::cout << "Position is: x=" << as.getPosition()->at(0) << ",  y = " << as.getPosition()->at(1) << ",  z = " << as.getPosition()->at(2) << std::endl;
@@ -60,14 +63,11 @@ int main(int argc, char** argv) {
 						std::cout << "Velocity is: x=" << as.getVelocity()->at(0) << ",  y = " << as.getVelocity()->at(1) << ",  z = " << as.getVelocity()->at(2) << std::endl;
 						break;
 					default:
-						
 						std::cout << "ERROR::INPUT: INPUT NOT BOUND" << std::endl;
 						break;
 				}
 			}
-			
 		}
-		
 	}
 	
 	as.~AudioSource();
