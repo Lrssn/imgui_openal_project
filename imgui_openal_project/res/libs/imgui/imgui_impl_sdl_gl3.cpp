@@ -45,7 +45,7 @@
 // SDL,GL3W
 #include <SDL.h>
 #include <SDL_syswm.h>
-#include <GL/gl3w.h>    // This example is using gl3w to access OpenGL functions (because it is small). You may use glew/glad/glLoadGen/etc. whatever already works for you.
+#include <glew.h>    // This example is using gl3w to access OpenGL functions (because it is small). You may use glew/glad/glLoadGen/etc. whatever already works for you.
 
 // SDL data
 static Uint64       g_Time = 0;
@@ -469,7 +469,7 @@ void ImGui_ImplSdlGL3_NewFrame(SDL_Window* window)
 #endif
 
     // Update OS/hardware mouse cursor if imgui isn't drawing a software cursor
-    if ((io.ConfigFlags & ImGuiConfigFlags_NoSetMouseCursor) == 0)
+    if ((io.ConfigFlags & ImGuiConfigFlags_NoMouseCursorChange) == 0)
     {
         ImGuiMouseCursor cursor = ImGui::GetMouseCursor();
         if (io.MouseDrawCursor || cursor == ImGuiMouseCursor_None)

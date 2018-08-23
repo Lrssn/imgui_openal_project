@@ -1,13 +1,14 @@
 #pragma once
 
 #include <iostream>
+#include <stdio.h>
+#include "./res/libs/imgui/imgui.h"
+#include "./res/libs/imgui/imgui_impl_sdl_gl3.h"
+#include <glew.h>
 #include <SDL.h>
 #include <SDL_image.h>
 #include <SDL_main.h>
-#include "./res/libs/imgui/imgui.h"
-#include "imgui_impl_sdl_gl3.h"
-#include <stdio.h>
-#include "./res/libs/gl3w/GL/gl3w.h"
+#include "AudioManager.h"
 
 class Window{
 public: 
@@ -32,4 +33,11 @@ private:
 	SDL_Renderer* renderer;
 	bool running, show_demo_window;
 	ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
+	SDL_GLContext gl_context;
+	//audio
+	AudioManager am;
+	std::vector<AudioSource> audioSources;
+	AudioSource as1 = AudioSource("./res/audio/bounce.wav", "effect");
+	float vol;
+
 };

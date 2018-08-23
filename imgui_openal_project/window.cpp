@@ -7,13 +7,24 @@ Window::Window(int _height, int _width){
 	this->width = _width;
 	this->running = true;
 	createWindow();
+	this->audioSources.emplace_back(AudioSource("./res/audio/imperial_march.wav", "Background music"));
+	AudioSource as = AudioSource("./res/audio/bounce.wav", "effect");
+	this->audioSources.emplace_back(as);
+	this->vol = (float)this->am.getVolume();
 }
 
 Window::~Window(){
 	//Destroy window
+	ImGui_ImplSdlGL3_Shutdown();
+	ImGui::DestroyContext(ImGui::CreateContext());
+	SDL_GL_DeleteContext(gl_context);
 	SDL_DestroyWindow(window);
 	//Quit SDL subsystems
 	SDL_Quit();
+	for(int i = 0; i< this->audioSources.size();i++){
+		this->audioSources.at(i).~AudioSource();
+	}
+	this->am.~AudioManager();
 }
 
 SDL_Window* Window::getWindow(){
@@ -28,10 +39,16 @@ void Window::update(){
 	draw();
 	
 	//loadSurface("res/images/aurora_400.jpg", *this->screenSurface);
+	// Rendering
+	glViewport(0, 0, (int)ImGui::GetIO().DisplaySize.x, (int)ImGui::GetIO().DisplaySize.y);
+	glClearColor(clear_color.x, clear_color.y, clear_color.z, clear_color.w);
+	glClear(GL_COLOR_BUFFER_BIT);
+	ImGui::Render();
+	ImGui_ImplSdlGL3_RenderDrawData(ImGui::GetDrawData());
+	SDL_GL_SwapWindow(window);
 	//Update the surface
-	SDL_UpdateWindowSurface(this->window);
-	//ms
-	SDL_Delay(750);
+	//SDL_UpdateWindowSurface(this->window);
+	
 }
 
 bool Window::getRunning() {
@@ -90,6 +107,7 @@ const void Window::loadImage(const std::string &_imagePath)
 }
 
 void Window::createWindow(){
+	// initialize SDL and OpenGL
 	if (SDL_Init(SDL_INIT_VIDEO) < 0) {
 		printf("SDL could not initialize! SDL_Error: %s\n", SDL_GetError());
 	}else {
@@ -121,41 +139,52 @@ void Window::createWindow(){
 	SDL_DisplayMode current;
 	SDL_GetCurrentDisplayMode(0, &current);
 	//SDL_Window* window = SDL_CreateWindow("ImGui SDL2+OpenGL3 example", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 1280, 720, SDL_WINDOW_OPENGL | SDL_WINDOW_RESIZABLE);
-	SDL_GLContext gl_context = SDL_GL_CreateContext(this->window);
+	gl_context = SDL_GL_CreateContext(this->window);
 	SDL_GL_SetSwapInterval(1); // Enable vsync
-	gl3wInit();
+	glewInit();
 	
+	// initialize imgui
 	ImGui::CreateContext();
 	ImGuiIO& io = ImGui::GetIO(); (void)io;
 	//io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;  // Enable Keyboard Controls
-	//ImGui_ImplSdlGL3_Init(this->window);
-	// Setup style
+	ImGui_ImplSdlGL3_Init(this->window);
+	
+	// Set Imgui colorstyle
 	ImGui::StyleColorsDark();
 	//ImGui::StyleColorsClassic();
 
-	loadImage("res/images/aurora_400.jpg");
+	//loadImage("res/images/aurora_400.jpg");
 }
 
 void Window::draw(){
-	//ImGui_ImplSdlGL3_NewFrame(this->window);
+	//create new imguiframe
+	ImGui_ImplSdlGL3_NewFrame(this->window);
 
 	// 1. Show a simple window.
 	// Tip: if we don't call ImGui::Begin()/ImGui::End() the widgets automatically appears in a window called "Debug".
-	{
-		static float f = 0.0f;
-		static int counter = 0;
-		ImGui::Text("Hello, world!");                           // Display some text (you can use a format string too)
-		ImGui::SliderFloat("float", &f, 0.0f, 1.0f);            // Edit 1 float using a slider from 0.0f to 1.0f    
-		ImGui::ColorEdit3("clear color", (float*)&clear_color); // Edit 3 floats representing a color
+	ImGui::Begin("fps");
+	ImGui::Text("Application average %.3f ms/frame (FPS %.1f)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
+	ImGui::ColorEdit3("clear color", (float*)&clear_color); // Edit 3 floats representing a color
+	ImGui::End();
 
-		ImGui::Checkbox("Demo Window", &show_demo_window);      // Edit bools storing our windows open/close state
-		//ImGui::Checkbox("Another Window", &show_another_window);
-
-		if (ImGui::Button("Button"))                            // Buttons return true when clicked (NB: most widgets return true when edited/activated)
-			counter++;
-		ImGui::SameLine();
-		ImGui::Text("counter = %d", counter);
-
-		ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
+	ImGui::SliderFloat("volume", &vol, 0.0f, 1.0f);            // Edit 1 float using a slider from 0.0f to 1.0f with 3 decimals   
+	if(this->vol != this->am.getVolume())
+		this->am.setVolume(vol);
+	
+	ImGui::Text("PLAY");
+	for (uint16_t i = 0; i < this->audioSources.size();i++){	
+		if(i!=0)
+			ImGui::SameLine();
+		if (ImGui::Button(this->audioSources.at(i).getName()))
+			this->am.Play(&this->audioSources.at(i));
 	}
+
+	if (ImGui::Button("Quit"))
+		this->stop();
+	
+	if (ImGui::Button("bg"))
+		this->am.Play(&this->as1);
+		
 }
+
+

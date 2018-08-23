@@ -6,6 +6,7 @@ AudioManager::AudioManager()
 	alutInit(0, nullptr);
 	// Capture errors
 	alGetError();
+	this->masterVolume = 1.0f;
 }
 
 AudioManager::~AudioManager()
@@ -16,7 +17,7 @@ AudioManager::~AudioManager()
 void AudioManager::setVolume(ALfloat _vol)
 {
 	//set volume
-	masterVolume = _vol;
+	masterVolume = (ALfloat)_vol;
 	alListenerf(AL_GAIN, masterVolume);
 	std::cout << "Volume set to: " << (float)this->masterVolume << std::endl;
 }
@@ -31,8 +32,8 @@ void AudioManager::Play(AudioSource* _soundSource)
 {
 	//Play
 	alSourcePlay(_soundSource->getSourceId());
-	// Wait for the song to complete
 	std::cout << "Played audiosource: " << _soundSource->getName() << std::endl;
+	// Wait for the song to complete
 	do {
 		alGetSourcei(_soundSource->getSourceId(), AL_SOURCE_STATE, &this->state);
 	} while (this->state == AL_PLAYING);

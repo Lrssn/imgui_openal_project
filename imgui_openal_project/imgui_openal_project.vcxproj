@@ -76,11 +76,11 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>C:\OpenGL\SDL_image\include;C:\OpenGL\SDL2\include;C:\OpenGL\OpenAL\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\OpenGL\imgui\include;C:\OpenGL\SDL_image\include;C:\OpenGL\glew\include\GL;C:\OpenGL\SDL2\include;C:\OpenGL\OpenAL\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
-      <AdditionalLibraryDirectories>C:\OpenGL\SDL_image\lib\x86;C:\OpenGL\SDL2\lib\x86;C:\OpenGL\OpenAL\libs\Win32;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>OpenAL32.lib;alut.lib;SDL2.lib;SDL2main.lib;SDL2_image.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>C:\OpenGL\glew\lib\Release\Win32;C:\OpenGL\SDL_image\lib\x86;C:\OpenGL\SDL2\lib\x86;C:\OpenGL\OpenAL\libs\Win32;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>OpenAL32.lib;OpenGL32.lib;alut.lib;SDL2.lib;SDL2main.lib;SDL2_image.lib;glew32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <SubSystem>Console</SubSystem>
     </Link>
   </ItemDefinitionGroup>
@@ -132,18 +132,15 @@
     <ClCompile Include="res\libs\imgui\imgui.cpp" />
     <ClCompile Include="res\libs\imgui\imgui_demo.cpp" />
     <ClCompile Include="res\libs\imgui\imgui_draw.cpp" />
+    <ClCompile Include="res\libs\imgui\imgui_impl_sdl_gl3.cpp" />
     <ClCompile Include="window.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <Media Include="res\audio\bounce.wav" />
-    <Media Include="res\audio\imperial_march.wav" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AudioManager.h" />
     <ClInclude Include="AudioSource.h" />
-    <ClInclude Include="imgui_impl_sdl_gl3.h" />
     <ClInclude Include="res\libs\imgui\imconfig.h" />
     <ClInclude Include="res\libs\imgui\imgui.h" />
+    <ClInclude Include="res\libs\imgui\imgui_impl_sdl_gl3.h" />
     <ClInclude Include="res\libs\imgui\imgui_internal.h" />
     <ClInclude Include="res\libs\imgui\stb_rect_pack.h" />
     <ClInclude Include="res\libs\imgui\stb_textedit.h" />

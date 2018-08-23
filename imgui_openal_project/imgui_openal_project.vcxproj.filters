@@ -36,14 +36,9 @@
     <ClCompile Include="res\libs\imgui\imgui_draw.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <Media Include="res\audio\bounce.wav">
-      <Filter>Resource Files</Filter>
-    </Media>
-    <Media Include="res\audio\imperial_march.wav">
-      <Filter>Resource Files</Filter>
-    </Media>
+    <ClCompile Include="res\libs\imgui\imgui_impl_sdl_gl3.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="window.h">
@@ -55,13 +50,13 @@
     <ClInclude Include="AudioSource.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="res\libs\imgui\stb_truetype.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="res\libs\imgui\imconfig.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="res\libs\imgui\imgui.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="res\libs\imgui\imgui_impl_sdl_gl3.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="res\libs\imgui\imgui_internal.h">
@@ -73,7 +68,7 @@
     <ClInclude Include="res\libs\imgui\stb_textedit.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="imgui_impl_sdl_gl3.h">
+    <ClInclude Include="res\libs\imgui\stb_truetype.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
