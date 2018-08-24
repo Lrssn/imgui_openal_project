@@ -1,6 +1,22 @@
 #include "AudioSource.h"
 #include <vector>
 
+AudioSource::AudioSource()
+{
+		
+	this->source = "";
+	this->name = "";
+	this->pos->push_back(0);
+	this->pos->push_back(0);
+	this->pos->push_back(0);
+	this->vel->push_back(0);
+	this->vel->push_back(0);
+	this->vel->push_back(0);
+	this->dir->push_back(0);
+	this->dir->push_back(0);
+	this->dir->push_back(0);
+}
+
 AudioSource::AudioSource(const char * _src, const char* _name)
 {
 	this->source = _src;
@@ -75,6 +91,11 @@ void AudioSource::setDirection(ALfloat _xd, ALfloat _yd, ALfloat _zd)
 	alSource3f(this->sourceId, AL_DIRECTION, dir->at(0), dir->at(1), dir->at(2));
 }
 
+void AudioSource::setName(const char* _name)
+{
+	this->name = _name;
+}
+
 
 ALuint AudioSource::getSourceId()
 {
@@ -139,6 +160,5 @@ void AudioSource::loadSource()
 		this->bufferId = alutCreateBufferFromFile(this->source);
 		// Create sound source (use buffer to fill source)
 		alGenSources(1, &this->sourceId);
-		alSourcei(this->sourceId, AL_BUFFER, this->bufferId);
-		
+		alSourcei(this->sourceId, AL_BUFFER, this->bufferId);		
 }

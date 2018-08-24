@@ -129,6 +129,7 @@
     <ClCompile Include="AudioManager.cpp" />
     <ClCompile Include="AudioSource.cpp" />
     <ClCompile Include="Main.cpp" />
+    <ClCompile Include="objectBox.cpp" />
     <ClCompile Include="res\libs\imgui\imgui.cpp" />
     <ClCompile Include="res\libs\imgui\imgui_demo.cpp" />
     <ClCompile Include="res\libs\imgui\imgui_draw.cpp" />
@@ -138,6 +139,7 @@
   <ItemGroup>
     <ClInclude Include="AudioManager.h" />
     <ClInclude Include="AudioSource.h" />
+    <ClInclude Include="objectBox.h" />
     <ClInclude Include="res\libs\imgui\imconfig.h" />
     <ClInclude Include="res\libs\imgui\imgui.h" />
     <ClInclude Include="res\libs\imgui\imgui_impl_sdl_gl3.h" />

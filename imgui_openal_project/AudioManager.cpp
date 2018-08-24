@@ -32,9 +32,11 @@ void AudioManager::Play(AudioSource* _soundSource)
 {
 	//Play
 	alSourcePlay(_soundSource->getSourceId());
-	std::cout << "Played audiosource: " << _soundSource->getName() << std::endl;
+	alGetSourcei(_soundSource->getSourceId(), AL_SOURCE_STATE, &this->state);
+	//std::cout << "Played audiosource: " << _soundSource->getName() << std::endl;
 	// Wait for the song to complete
 	do {
+		std::cout << "played: " << _soundSource->getName() << std::endl;
 		alGetSourcei(_soundSource->getSourceId(), AL_SOURCE_STATE, &this->state);
 	} while (this->state == AL_PLAYING);
 }

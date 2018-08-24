@@ -5,6 +5,7 @@
 
 class AudioSource {
 public:
+	AudioSource();
 	AudioSource(const char* _src, const char* _name);
 	~AudioSource();
 	//set pitch, volume, position osv
@@ -14,11 +15,13 @@ public:
 	void setPosition(ALfloat _xp, ALfloat _yp, ALfloat _zp);
 	void setVelocity(ALfloat _xv, ALfloat _yv, ALfloat _zv);
 	void setDirection(ALfloat _xd, ALfloat _yd, ALfloat _zd);
+	void setName(const char* _name);
+	void setSource(const char* _src);
+	//get pitch, volume, position osv
 	ALuint getSourceId();
 	ALfloat getPitch();
 	ALfloat getVolume();
 	ALboolean getLooping();
-	void setSource(const char* _src);
 	const char* getSource();
 	const char* getName();
 	std::vector<float> *getPosition();

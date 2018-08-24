@@ -9,6 +9,7 @@
 #include <SDL_image.h>
 #include <SDL_main.h>
 #include "AudioManager.h"
+#include "objectBox.h"
 
 class Window{
 public: 
@@ -35,9 +36,8 @@ private:
 	ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
 	SDL_GLContext gl_context;
 	//audio
+	AudioSource as = AudioSource("./res/audio/imperial_march.wav", "clang");
 	AudioManager am;
-	std::vector<AudioSource> audioSources;
-	AudioSource as1 = AudioSource("./res/audio/bounce.wav", "effect");
 	float vol;
 
 };

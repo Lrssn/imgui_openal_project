@@ -7,9 +7,6 @@ Window::Window(int _height, int _width){
 	this->width = _width;
 	this->running = true;
 	createWindow();
-	this->audioSources.emplace_back(AudioSource("./res/audio/imperial_march.wav", "Background music"));
-	AudioSource as = AudioSource("./res/audio/bounce.wav", "effect");
-	this->audioSources.emplace_back(as);
 	this->vol = (float)this->am.getVolume();
 }
 
@@ -21,9 +18,6 @@ Window::~Window(){
 	SDL_DestroyWindow(window);
 	//Quit SDL subsystems
 	SDL_Quit();
-	for(int i = 0; i< this->audioSources.size();i++){
-		this->audioSources.at(i).~AudioSource();
-	}
 	this->am.~AudioManager();
 }
 
@@ -170,21 +164,13 @@ void Window::draw(){
 	ImGui::SliderFloat("volume", &vol, 0.0f, 1.0f);            // Edit 1 float using a slider from 0.0f to 1.0f with 3 decimals   
 	if(this->vol != this->am.getVolume())
 		this->am.setVolume(vol);
+
 	
 	ImGui::Text("PLAY");
-	for (uint16_t i = 0; i < this->audioSources.size();i++){	
-		if(i!=0)
-			ImGui::SameLine();
-		if (ImGui::Button(this->audioSources.at(i).getName()))
-			this->am.Play(&this->audioSources.at(i));
-	}
-
+	if (ImGui::Button(as.getName()))
+		am.Play(&as);
 	if (ImGui::Button("Quit"))
 		this->stop();
-	
-	if (ImGui::Button("bg"))
-		this->am.Play(&this->as1);
-		
 }
 
 
