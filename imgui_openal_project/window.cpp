@@ -1,4 +1,5 @@
 #include "window.h"
+#include <fstream>
 
 Window::Window(int _height, int _width){
 	this->window = nullptr;
@@ -19,6 +20,9 @@ Window::~Window(){
 	//Quit SDL subsystems
 	SDL_Quit();
 	this->am.~AudioManager();
+	ob.~objectBox();
+	
+	
 }
 
 SDL_Window* Window::getWindow(){
@@ -51,6 +55,11 @@ bool Window::getRunning() {
 
 void Window::stop() {
 	this->running = false;
+}
+
+AudioManager* Window::getAudioManager()
+{
+	return &this->am;
 }
 
 [[deprecated("Replaced by loadImage")]]
@@ -167,10 +176,14 @@ void Window::draw(){
 
 	
 	ImGui::Text("PLAY");
-	if (ImGui::Button(as.getName()))
-		am.Play(&as);
 	if (ImGui::Button("Quit"))
 		this->stop();
+	if (ImGui::Button("0")) {
+		t1 = std::thread(&AudioManager::Play, this->am, &ob.getAudioSource());
+	}
+	t1.detach();
+	
+		
 }
 
 

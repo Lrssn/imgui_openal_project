@@ -5,6 +5,7 @@
 #include <al.h>
 #include <alc.h>
 #include "AudioSource.h"
+#include <thread>
 
 class AudioManager {
 public:
@@ -14,7 +15,10 @@ public:
 	ALfloat getVolume();
 	void Play(AudioSource* _soundSource);
 private:
+	//std::thread bgMusic, effects;
 	ALint state;
+	std::thread t1;
+	ALCdevice* Device;
 	ALfloat masterVolume;
 	ALfloat listenerPos[3] = {0.0, 0.0, 0.0};
 	ALfloat listenerVel[3] = {0.0, 0.0, 0.0};

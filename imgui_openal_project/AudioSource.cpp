@@ -3,7 +3,6 @@
 
 AudioSource::AudioSource()
 {
-		
 	this->source = "";
 	this->name = "";
 	this->pos->push_back(0);
@@ -120,10 +119,15 @@ ALboolean AudioSource::getLooping()
 void AudioSource::setSource(const char* _src)
 {
 	alDeleteSources(1, &this->sourceId);
+	if (alutGetError())
+		std::cout << "ALUT::DELETE1::ERROR::" << alutGetErrorString(alutGetError()) << std::endl;
 	alDeleteBuffers(1, &this->bufferId);
+	if (alutGetError())
+		std::cout << "ALUT::DELETE2::ERROR::" << alutGetErrorString(alutGetError()) << std::endl;
 	this->source = _src;
 	loadSource();
-	std::cout << "Source: " << this->name << " has been loaded with " << this->source << std::endl;
+	if (alutGetError())
+		std::cout << "Source: " << this->name << " has been loaded with " << this->source << std::endl;
 }
 
 const char* AudioSource::getSource()
@@ -156,9 +160,17 @@ std::vector<float> *AudioSource::getDirection()
 
 void AudioSource::loadSource()
 {
+		if(alutGetError())
+			std::cout << "ALUT::PRE::ERROR::" << alutGetErrorString(alutGetError()) << std::endl;
 		// Load pcm data into buffer
 		this->bufferId = alutCreateBufferFromFile(this->source);
+		if (alutGetError())
+			std::cout << "ALUT::LOADBUFFER::ERROR::" << alutGetErrorString(alutGetError()) << std::endl;
 		// Create sound source (use buffer to fill source)
 		alGenSources(1, &this->sourceId);
-		alSourcei(this->sourceId, AL_BUFFER, this->bufferId);		
+		if (alutGetError())
+			std::cout << "ALUT::GENSOURCE::ERROR::" << alutGetErrorString(alutGetError()) << std::endl;
+		alSourcei(this->sourceId, AL_BUFFER, this->bufferId);
+		if (alutGetError())
+			std::cout << "ALUT::CONNECTSOURCETOBUFFER::ERROR::" << alutGetErrorString(alutGetError()) << std::endl;
 }

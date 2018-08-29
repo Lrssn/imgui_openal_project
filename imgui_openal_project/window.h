@@ -10,7 +10,7 @@
 #include <SDL_main.h>
 #include "AudioManager.h"
 #include "objectBox.h"
-
+#include <thread>
 class Window{
 public: 
 	Window(int _height, int _width);
@@ -20,6 +20,7 @@ public:
 	void update();
 	bool getRunning();
 	void stop();
+	AudioManager* getAudioManager();
 private:
 	SDL_Surface* loadSurface(const std::string &_imagePath, SDL_Surface &_screenSurface);
 	const void loadImage(const std::string &_imagePath);
@@ -36,7 +37,8 @@ private:
 	ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
 	SDL_GLContext gl_context;
 	//audio
-	AudioSource as = AudioSource("./res/audio/imperial_march.wav", "clang");
+	std::thread t1;
+	objectBox ob = objectBox();
 	AudioManager am;
 	float vol;
 

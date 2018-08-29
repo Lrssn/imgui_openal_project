@@ -4,13 +4,15 @@ AudioManager::AudioManager()
 {
 	// Initialize the environment
 	alutInit(0, nullptr);
-	// Capture errors
-	alGetError();
+	if (alutGetError())
+		std::cout << "ALUT::INIT::ERROR::" << alutGetErrorString(alutGetError()) << std::endl;
 	this->masterVolume = 1.0f;
 }
 
 AudioManager::~AudioManager()
 {
+	//bgMusic.join();
+	//effects.join();
 	alutExit();
 }
 
@@ -31,12 +33,12 @@ ALfloat AudioManager::getVolume()
 void AudioManager::Play(AudioSource* _soundSource)
 {
 	//Play
+	std::cout << "played: " << _soundSource->getSourceId() << std::endl;
+	//std::thread bgMusic(tPLay, &_soundSource);
 	alSourcePlay(_soundSource->getSourceId());
-	alGetSourcei(_soundSource->getSourceId(), AL_SOURCE_STATE, &this->state);
-	//std::cout << "Played audiosource: " << _soundSource->getName() << std::endl;
-	// Wait for the song to complete
+	if (alutGetError())
+		std::cout << alutGetErrorString(alutGetError()) << std::endl;
 	do {
-		std::cout << "played: " << _soundSource->getName() << std::endl;
 		alGetSourcei(_soundSource->getSourceId(), AL_SOURCE_STATE, &this->state);
 	} while (this->state == AL_PLAYING);
 }
