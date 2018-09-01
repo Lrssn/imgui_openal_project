@@ -6,7 +6,7 @@ class objectBox
 public:
 	objectBox();
 	~objectBox();
-	AudioSource *getAudioSource();
+	AudioSource getAudioSource();
 private:
 	AudioSource as = AudioSource("./res/audio/bounce.wav", "bounce");
 };

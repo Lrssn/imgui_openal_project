@@ -10,6 +10,7 @@ objectBox::~objectBox()
 }
 
 
-AudioSource *objectBox::getAudioSource(){
-	return &as;
+AudioSource objectBox::getAudioSource()
+{
+	return as;
 }

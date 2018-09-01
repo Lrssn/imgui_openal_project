@@ -2,15 +2,16 @@
 
 #include <iostream>
 #include <stdio.h>
-#include "./res/libs/imgui/imgui.h"
-#include "./res/libs/imgui/imgui_impl_sdl_gl3.h"
 #include <glew.h>
 #include <SDL.h>
 #include <SDL_image.h>
 #include <SDL_main.h>
+#include <thread>
 #include "AudioManager.h"
 #include "objectBox.h"
-#include <thread>
+#include "./res/libs/imgui/imgui.h"
+#include "./res/libs/imgui/imgui_impl_sdl_gl3.h"
+
 class Window{
 public: 
 	Window(int _height, int _width);
@@ -22,6 +23,7 @@ public:
 	void stop();
 	AudioManager* getAudioManager();
 private:
+	SDL_DisplayMode current;
 	SDL_Surface* loadSurface(const std::string &_imagePath, SDL_Surface &_screenSurface);
 	const void loadImage(const std::string &_imagePath);
 	void createWindow();
@@ -37,9 +39,9 @@ private:
 	ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
 	SDL_GLContext gl_context;
 	//audio
-	std::thread t1;
+	//std::thread t1;
 	objectBox ob = objectBox();
+	AudioSource as = AudioSource("./res/audio/Clang.wav", "Clang");
 	AudioManager am;
 	float vol;
-
 };

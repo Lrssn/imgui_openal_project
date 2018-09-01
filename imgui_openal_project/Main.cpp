@@ -5,10 +5,12 @@ int main(int argc, char** argv) {
 	const int width = 640, height = 480;
 	Window window(height, width);
 	//audio
-	std::thread t1;
+	
 	SDL_Event event;
-	//AudioManager am = AudioManager();
+	//std::thread t1;
 	AudioSource as = AudioSource("./res/audio/imperial_march.wav", "clang");
+	//t1 = std::thread(&AudioManager::Play, std::ref(as));
+	std::thread t1([&](AudioManager* tam) { tam->Play(&as); }, window.getAudioManager());
 	while (window.getRunning()) {
 		window.update();
 		while (SDL_PollEvent(&event) != NULL) {
@@ -31,8 +33,10 @@ int main(int argc, char** argv) {
 			}
 		}
 	}
-	window.~Window();
 	
+	window.~Window();
+	t1.join();
+	as.~AudioSource();
 	
 	return 0;
 }

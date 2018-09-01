@@ -139,8 +139,8 @@ void Window::createWindow(){
 		}
 	}
 	
-	SDL_DisplayMode current;
-	SDL_GetCurrentDisplayMode(0, &current);
+	
+	SDL_GetCurrentDisplayMode(0, &this->current);
 	//SDL_Window* window = SDL_CreateWindow("ImGui SDL2+OpenGL3 example", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 1280, 720, SDL_WINDOW_OPENGL | SDL_WINDOW_RESIZABLE);
 	gl_context = SDL_GL_CreateContext(this->window);
 	SDL_GL_SetSwapInterval(1); // Enable vsync
@@ -178,10 +178,6 @@ void Window::draw(){
 	ImGui::Text("PLAY");
 	if (ImGui::Button("Quit"))
 		this->stop();
-	if (ImGui::Button("0")) {
-		t1 = std::thread(&AudioManager::Play, this->am, &ob.getAudioSource());
-	}
-	t1.detach();
 	
 		
 }
